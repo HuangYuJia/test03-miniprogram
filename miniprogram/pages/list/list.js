@@ -19,10 +19,14 @@ function yearTextFromProduct(p) {
 }
 
 Page({
+  _itemsCache: new Map(),
+
   data: {
     loading: true,
     categoryId: "",
     categoryName: "",
+    categories: [],
+    activeCategoryIndex: 0,
     items: [],
     countText: ""
   },
@@ -32,36 +36,84 @@ Page({
     const categoryId = decodeRouteQueryParam(options.categoryId);
     const categoryName = decodeRouteQueryParam(options.categoryName);
     this.setData({ categoryId, categoryName });
-    this.load();
-    this.fetchCategoryDisplayName();
+    this.bootstrap();
   },
 
   async onPullDownRefresh() {
-    await Promise.all([this.load(), this.fetchCategoryDisplayName()]);
+    this._itemsCache = new Map();
+    await this.bootstrap({ force: true });
     wx.stopPullDownRefresh();
   },
 
-  /** 标题以云端分类名为准，避免 URL 双重编码或框架解码差异导致显示 %E5%… */
-  async fetchCategoryDisplayName() {
-    const id = this.data.categoryId;
-    if (!id) return;
+  async bootstrap({ force = false } = {}) {
+    await this.loadCategories();
+    await this.ensureActiveCategory({ force });
+  },
+
+  async loadCategories() {
     try {
-      const res = await db.collection("categories").doc(id).get();
-      const doc = res.data;
-      const raw = doc && doc.name != null ? String(doc.name).trim() : "";
-      const name = raw ? decodeRouteQueryParam(raw) : "";
-      if (name) this.setData({ categoryName: name });
+      const res = await db
+        .collection("categories")
+        .where({ enabled: true })
+        .orderBy("sort", "asc")
+        .orderBy("createdAt", "desc")
+        .limit(200)
+        .get();
+      this.setData({ categories: res.data || [] });
     } catch (e) {
-      // 保留 onLoad 里从 query 解码得到的标题
+      this.setData({ categories: [] });
+      wx.showToast({ title: "读取分类失败", icon: "none" });
     }
   },
 
-  async load() {
+  async ensureActiveCategory({ force = false } = {}) {
+    const cats = this.data.categories || [];
+    if (!cats.length) {
+      this.setData({
+        items: [],
+        countText: "暂无商品",
+        categoryName: "",
+        categoryId: "",
+        activeCategoryIndex: 0,
+        loading: false
+      });
+      return;
+    }
+
+    // 优先：从路由 categoryId 定位；否则默认第一个分类
+    const byId = this.data.categoryId
+      ? cats.findIndex((c) => c._id === this.data.categoryId)
+      : -1;
+    const idx = Math.max(0, byId);
+    const active = cats[idx];
+    const nameRaw = active?.name != null ? String(active.name).trim() : "";
+    const name = nameRaw ? decodeRouteQueryParam(nameRaw) : "";
+    const nextId = active?._id || "";
+
+    this.setData({
+      activeCategoryIndex: idx,
+      categoryId: nextId,
+      categoryName: name
+    });
+
+    await this.loadProductsForCategory(nextId, { force });
+  },
+
+  async loadProductsForCategory(categoryId, { force = false } = {}) {
+    if (!categoryId) return;
+    if (!force && this._itemsCache?.has(categoryId)) {
+      const cached = this._itemsCache.get(categoryId) || [];
+      this.setData({
+        items: cached,
+        countText: cached.length ? `共 ${cached.length} 个` : "暂无商品",
+        loading: false
+      });
+      return;
+    }
+
     this.setData({ loading: true });
     try {
-      const where = { enabled: true };
-      if (this.data.categoryId) where.categoryId = this.data.categoryId;
-
+      const where = { enabled: true, categoryId };
       const res = await db
         .collection("products")
         .where(where)
@@ -78,6 +130,7 @@ Page({
       }));
 
       await hydrateCoverUrls(items);
+      this._itemsCache.set(categoryId, items);
 
       this.setData({
         items,
@@ -88,6 +141,23 @@ Page({
     } finally {
       this.setData({ loading: false });
     }
+  },
+
+  onPickCategory(e) {
+    const idx = Number(e?.currentTarget?.dataset?.idx || 0);
+    const cats = this.data.categories || [];
+    if (!Number.isFinite(idx) || idx < 0 || idx >= cats.length) return;
+    if (idx === this.data.activeCategoryIndex) return;
+    const c = cats[idx];
+    const nameRaw = c?.name != null ? String(c.name).trim() : "";
+    const name = nameRaw ? decodeRouteQueryParam(nameRaw) : "";
+    const id = c?._id || "";
+    this.setData({
+      activeCategoryIndex: idx,
+      categoryId: id,
+      categoryName: name
+    });
+    this.loadProductsForCategory(id);
   },
 
   goSearch() {

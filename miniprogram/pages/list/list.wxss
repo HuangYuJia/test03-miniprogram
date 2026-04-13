@@ -24,8 +24,49 @@
   font-size: 26rpx;
 }
 
-.grid {
+.twoPane {
   margin-top: 16rpx;
+  display: flex;
+  gap: 14rpx;
+  height: calc(100vh - 210rpx);
+}
+
+.left {
+  width: 200rpx;
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.cat {
+  padding: 18rpx 14rpx;
+  border-bottom: 2rpx solid rgba(17, 24, 39, 0.06);
+}
+
+.catName {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.82);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.catActive {
+  background: #ffffff;
+  border-left: 8rpx solid rgba(17, 24, 39, 0.88);
+}
+
+.right {
+  flex: 1;
+}
+
+.loading {
+  padding: 8rpx 2rpx 14rpx;
+}
+
+.grid {
+  margin-top: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16rpx;
