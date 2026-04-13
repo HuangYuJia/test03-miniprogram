@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="top card">
+    <view class="topRow">
+      <view class="title">产品相册报价</view>
+      <view class="searchBtn" bindtap="goSearch">搜索</view>
+    </view>
+    <view class="subtitle muted">
+      <view>关键词一件搜索</view>
+      <view>更多机器详情请移步主页查看</view>
+    </view>
+  </view>
+
+  <view class="sectionHeader">
+    <view class="sectionTitle">分类</view>
+    <view class="sectionRight">
+      <view wx:if="{{isAdmin}}" class="adminEntry" bindtap="goAdmin">管理</view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="muted">加载中…</view>
+
+  <view wx:elif="{{categories.length === 0}}" class="empty card">
+    <view class="emptyTitle">还没有分类</view>
+    <view class="emptyDesc muted">你可以先去管理端创建分类和商品。</view>
+    <view wx:if="{{isAdmin}}" class="btn btn-primary" bindtap="goCategoryAdmin">去建分类</view>
+  </view>
+
+  <view wx:else class="grid">
+    <view
+      wx:for="{{categories}}"
+      wx:key="_id"
+      class="cat card"
+      data-id="{{item._id}}"
+      data-name="{{item.name}}"
+      bindtap="goCategory"
+    >
+      <view class="catName">{{item.name}}</view>
+      <view class="catHint muted">进入查看</view>
+    </view>
+  </view>
+</view>

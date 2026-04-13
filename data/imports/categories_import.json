@@ -1,0 +1,18 @@
+[
+  { "_id": "1", "name": "二手液压打包机", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "2", "name": "二手金属剪切机", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "3", "name": "二手塑料破碎机", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "4", "name": "二手铜米机", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "5", "name": "二手废纸打包机", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "6", "name": "塑料回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "7", "name": "金属回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "8", "name": "纸品回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "9", "name": "电子回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "10", "name": "橡胶回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "11", "name": "玻璃回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "12", "name": "塑料回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "13", "name": "金属回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "14", "name": "电子回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 },
+  { "_id": "15", "name": "橡胶回收设备", "enabled": true, "sort": 0, "createdAt": 1775735453366, "updatedAt": 1775735453366 }
+]
+

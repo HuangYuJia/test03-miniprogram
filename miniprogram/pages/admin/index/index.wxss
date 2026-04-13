@@ -1,0 +1,170 @@
+.deny {
+  margin-top: 8rpx;
+  padding: 22rpx;
+}
+
+.denyTitle {
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.denyDesc {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.btn {
+  margin-top: 16rpx;
+  display: inline-block;
+  padding: 18rpx 24rpx;
+}
+
+.actions {
+  margin-top: 8rpx;
+  padding: 18rpx;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84rpx;
+  font-size: 28rpx;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.filterRow {
+  margin-top: 8rpx;
+  padding: 14rpx;
+  display: flex;
+  gap: 12rpx;
+}
+
+.filterBtn {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 26rpx;
+  border-radius: 12rpx;
+  background: rgba(17, 24, 39, 0.06);
+  color: #374151;
+  border: none;
+}
+
+.filterBtn::after {
+  border: none;
+}
+
+.filterBtnActive {
+  background: #111827;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 28rpx 2rpx 14rpx;
+}
+
+.sectionTitle {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.list {
+  display: grid;
+  gap: 14rpx;
+}
+
+.row {
+  padding: 14rpx;
+  display: flex;
+  gap: 14rpx;
+}
+
+.thumb {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  background: rgba(17, 24, 39, 0.06);
+}
+
+.rowMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.rowTitle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10rpx;
+}
+
+.name {
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 1.2;
+  flex: 1;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.status {
+  font-size: 22rpx;
+  padding: 6rpx 10rpx;
+  border-radius: 999rpx;
+  background: rgba(17, 24, 39, 0.06);
+  color: #111827;
+  white-space: nowrap;
+}
+
+.rowSub {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+}
+
+.rowBtns {
+  margin-top: 12rpx;
+  display: flex;
+  gap: 10rpx;
+}
+
+.smallBtn {
+  padding: 12rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+}
+
+.empty {
+  padding: 22rpx;
+}
+
+.emptyTitle {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.emptyDesc {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 24rpx;
+}
+

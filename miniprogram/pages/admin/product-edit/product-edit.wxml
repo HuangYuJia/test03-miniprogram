@@ -1,0 +1,95 @@
+<view class="container">
+  <view class="card form">
+    <view class="formTitle">{{id ? "编辑商品" : "新增商品"}}</view>
+
+    <view class="field">
+      <view class="label muted">名称</view>
+      <input class="input" placeholder="如：XX款式/型号" value="{{name}}" bindinput="onName" />
+    </view>
+
+    <view class="field">
+      <view class="label muted">分类</view>
+      <picker range="{{categories}}" range-key="name" value="{{categoryIndex}}" bindchange="onCategoryPick">
+        <view class="picker cardInner">
+          {{categories[categoryIndex] ? categories[categoryIndex].name : "请选择分类"}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="field twoCol">
+      <view class="col">
+        <view class="label muted">年份（必填）</view>
+        <picker mode="date" fields="year" value="{{year || defaultYear}}" bindchange="onYearPick">
+          <view class="picker cardInner">
+            {{year || "请选择年份"}}
+          </view>
+        </picker>
+      </view>
+      <view class="col">
+        <view class="label muted">月份（可选）</view>
+        <picker range="{{monthOptions}}" value="{{monthIndex}}" bindchange="onMonthPick">
+          <view class="picker cardInner">
+            {{month || "请选择月份"}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="field twoCol">
+      <view class="col">
+        <view class="label muted">价格（分）</view>
+        <input class="input" type="number" placeholder="如：19900" value="{{price}}" bindinput="onPrice" />
+      </view>
+      <view class="col">
+        <view class="label muted">行程（可选）</view>
+        <input class="input" value="{{unit}}" bindinput="onUnit" />
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="label muted">标签（可选，逗号分隔）</view>
+      <input class="input" placeholder="新品,爆款" value="{{tagsText}}" bindinput="onTags" />
+    </view>
+
+    <view class="field">
+      <view class="label muted">排序（数字越小越靠前）</view>
+      <input class="input" type="number" placeholder="0" value="{{sort}}" bindinput="onSort" />
+    </view>
+
+    <view class="field">
+      <view class="label muted">备注/规格（可选）</view>
+      <textarea class="textarea" placeholder="尺寸、材质、起订量、交期…" value="{{desc}}" bindinput="onDesc" />
+    </view>
+  </view>
+
+  <view class="card media">
+    <view class="mediaTop">
+      <view class="mediaTitle">图片</view>
+      <button class="btn-ghost smallBtn" bindtap="chooseImages">选择图片</button>
+    </view>
+
+    <view class="muted mediaHint">第一张会作为封面。建议每个商品 3-9 张。</view>
+
+    <view wx:if="{{previews.length === 0}}" class="muted">还未选择图片</view>
+
+    <view wx:else class="imgGrid">
+      <view wx:for="{{previews}}" wx:for-item="src" wx:for-index="idx" wx:key="idx" class="imgWrap">
+        <image
+          class="img"
+          mode="aspectFill"
+          src="{{src}}"
+          data-idx="{{idx}}"
+          binderror="onPreviewImageError"
+        ></image>
+        <view class="del" data-idx="{{idx}}" bindtap="removeImage">×</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card saveBar">
+    <switch checked="{{enabled}}" bindchange="onEnabled" />
+    <view class="muted">{{enabled ? "上架" : "下架"}}</view>
+    <button class="btn-primary saveBtn" bindtap="save">保存</button>
+  </view>
+</view>
+

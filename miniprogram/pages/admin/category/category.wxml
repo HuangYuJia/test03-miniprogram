@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="card form">
+    <view class="formTitle">新增分类</view>
+    <view class="row">
+      <input class="input" placeholder="请输入分类名称" value="{{newName}}" bindinput="onNewName" />
+      <button class="btn-primary addBtn" bindtap="add">添加</button>
+    </view>
+    <view class="muted hint">提示：分类只影响展示结构，商品可随时改分类。</view>
+  </view>
+
+  <view class="sectionHeader">
+    <view class="sectionTitle">已有分类</view>
+    <view class="sectionRight muted">
+      {{countText}}
+      <text wx:if="{{dirtyCount}}">，未保存 {{dirtyCount}}</text>
+      <button wx:if="{{dirtyCount}}" class="btn-ghost smallBtn" bindtap="saveAll">保存全部</button>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="muted">加载中…</view>
+
+  <view wx:elif="{{items.length === 0}}" class="card empty">
+    <view class="emptyTitle">暂无分类</view>
+    <view class="emptyDesc muted">先添加一个分类，再去新增商品。</view>
+  </view>
+
+  <view wx:else class="list">
+    <view wx:for="{{items}}" wx:key="_id" class="card item">
+      <view class="itemTop">
+        <input class="nameInput" value="{{item.name}}" data-id="{{item._id}}" bindinput="onNameChange" />
+        <switch checked="{{item.enabled}}" data-id="{{item._id}}" bindchange="onEnabledChange" />
+      </view>
+      <view class="itemBottom">
+        <view class="muted">排序</view>
+        <input class="sortInput" type="number" value="{{item.sort}}" data-id="{{item._id}}" bindinput="onSortChange" />
+        <button class="btn-ghost smallBtn" data-id="{{item._id}}" bindtap="saveOne">保存</button>
+      </view>
+    </view>
+  </view>
+</view>
+

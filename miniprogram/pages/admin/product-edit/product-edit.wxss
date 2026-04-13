@@ -1,0 +1,129 @@
+.form {
+  margin-top: 8rpx;
+  padding: 18rpx;
+}
+
+.formTitle {
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.field {
+  margin-top: 16rpx;
+}
+
+.label {
+  font-size: 24rpx;
+  margin-bottom: 8rpx;
+}
+
+.input {
+  height: 76rpx;
+  background: rgba(17, 24, 39, 0.06);
+  border-radius: 16rpx;
+  padding: 0 18rpx;
+  font-size: 28rpx;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 180rpx;
+  background: rgba(17, 24, 39, 0.06);
+  border-radius: 16rpx;
+  padding: 16rpx 18rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+}
+
+.cardInner {
+  height: 76rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 18rpx;
+  border-radius: 16rpx;
+  background: rgba(17, 24, 39, 0.06);
+  font-size: 28rpx;
+}
+
+.media {
+  margin-top: 16rpx;
+  padding: 18rpx;
+}
+
+.mediaTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mediaTitle {
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.smallBtn {
+  padding: 12rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+}
+
+.mediaHint {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+}
+
+.imgGrid {
+  margin-top: 14rpx;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10rpx;
+}
+
+.imgWrap {
+  border-radius: 16rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.img {
+  width: 100%;
+  height: 210rpx;
+  background: rgba(17, 24, 39, 0.06);
+}
+
+.del {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 999rpx;
+  background: rgba(17, 24, 39, 0.72);
+  color: #fff;
+  font-size: 32rpx;
+  line-height: 44rpx;
+  text-align: center;
+}
+
+.saveBar {
+  margin-top: 16rpx;
+  padding: 18rpx;
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.saveBtn {
+  height: 84rpx;
+  line-height: 84rpx;
+  padding: 0 22rpx;
+  font-size: 28rpx;
+}
+

@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="searchBar card">
+    <input
+      class="input"
+      placeholder="输入关键词（可留空查看全部）"
+      value="{{q}}"
+      confirm-type="search"
+      bindinput="onInput"
+      bindconfirm="onSearch"
+    />
+    <view class="searchBtn" bindtap="onSearch">搜索</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="muted">搜索中…</view>
+
+  <view wx:elif="{{searched && items.length === 0}}" class="empty card">
+    <view class="emptyTitle">没找到相关商品</view>
+    <view class="emptyDesc muted">换个关键词试试。</view>
+  </view>
+
+  <view wx:elif="{{items.length > 0}}" class="grid">
+    <view
+      wx:for="{{items}}"
+      wx:key="_id"
+      class="item card"
+      data-id="{{item._id}}"
+      bindtap="goDetail"
+    >
+      <image
+        class="cover"
+        mode="aspectFill"
+        src="{{item.coverDisplaySrc}}"
+        data-idx="{{index}}"
+        data-fileid="{{item.coverFileId}}"
+        binderror="onCoverError"
+      ></image>
+      <view class="meta">
+        <view class="line"><text class="k">名称：</text><text class="v">{{item.name}}</text></view>
+        <view class="line"><text class="k">价格：</text><text class="v">¥{{item.priceText}}</text></view>
+        <view class="line"><text class="k">行程：</text><text class="v">{{item.unit || "-"}}</text></view>
+        <view class="line"><text class="k">年份：</text><text class="v">{{item.yearText || "-"}}</text></view>
+      </view>
+    </view>
+  </view>
+</view>

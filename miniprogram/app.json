@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/list/list",
+    "pages/detail/detail",
+    "pages/search/search",
+    "pages/admin/index/index",
+    "pages/admin/product-edit/product-edit",
+    "pages/admin/category/category"
+  ],
+  "window": {
+    "navigationBarTitleText": "产品相册",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f6f7fb",
+    "backgroundTextStyle": "light"
+  },
+  "cloud": true,
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+

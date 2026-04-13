@@ -1,0 +1,49 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="muted">加载中…</view>
+
+  <view wx:elif="{{!item}}" class="empty card">
+    <view class="emptyTitle">商品不存在或已下架</view>
+    <view class="btn btn-ghost" bindtap="goHome">返回首页</view>
+  </view>
+
+  <view wx:else>
+    <view class="media card">
+      <swiper class="swiper" circular="{{true}}" indicator-dots="{{images.length > 1}}" autoplay="{{false}}">
+        <swiper-item wx:for="{{images}}" wx:key="*this">
+          <image
+            class="img"
+            mode="aspectFill"
+            src="{{item}}"
+            data-idx="{{index}}"
+            bindtap="preview"
+            binderror="onImageError"
+          ></image>
+        </swiper-item>
+      </swiper>
+    </view>
+
+    <view class="info card">
+      <view class="kv">
+        <view class="kvLine"><text class="k">名称：</text><text class="v">{{item.name}}</text></view>
+        <view class="kvLine"><text class="k">价格：</text><text class="v">¥{{item.priceText}}</text></view>
+        <view class="kvLine"><text class="k">行程：</text><text class="v">{{item.unit || "-"}}</text></view>
+        <view class="kvLine"><text class="k">年份：</text><text class="v">{{item.yearText || "-"}}</text></view>
+      </view>
+      <view class="tags" wx:if="{{item.tags && item.tags.length}}">
+        <view class="tag" wx:for="{{item.tags}}" wx:key="*this">{{item}}</view>
+      </view>
+      <view class="desc muted" wx:if="{{item.desc}}">{{item.desc}}</view>
+    </view>
+
+    <view class="actions card">
+      <button class="btn-primary actionBtn" open-type="share">转发给客户</button>
+      <button class="btn-ghost actionBtn" bindtap="callPhone">拨打电话</button>
+    </view>
+
+    <view class="contact card">
+      <view class="contactTitle">备注联系人信息</view>
+      <view class="contactLine muted">微信号：{{serviceWechatId}}</view>
+      <view class="contactLine muted">电话号码：{{servicePhoneDisplay}}</view>
+    </view>
+  </view>
+</view>

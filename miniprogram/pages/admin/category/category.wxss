@@ -1,0 +1,112 @@
+.form {
+  margin-top: 8rpx;
+  padding: 18rpx;
+}
+
+.formTitle {
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.row {
+  margin-top: 12rpx;
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 72rpx;
+  background: rgba(17, 24, 39, 0.06);
+  border-radius: 16rpx;
+  padding: 0 18rpx;
+  font-size: 28rpx;
+}
+
+.addBtn {
+  height: 72rpx;
+  line-height: 72rpx;
+  padding: 0 16rpx;
+  font-size: 28rpx;
+}
+
+.hint {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 28rpx 2rpx 14rpx;
+}
+
+.sectionTitle {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.list {
+  display: grid;
+  gap: 14rpx;
+}
+
+.item {
+  padding: 16rpx;
+}
+
+.itemTop {
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nameInput {
+  flex: 1;
+  height: 64rpx;
+  background: rgba(17, 24, 39, 0.06);
+  border-radius: 14rpx;
+  padding: 0 16rpx;
+  font-size: 28rpx;
+}
+
+.itemBottom {
+  margin-top: 12rpx;
+  display: flex;
+  gap: 10rpx;
+  align-items: center;
+}
+
+.sortInput {
+  width: 140rpx;
+  height: 64rpx;
+  background: rgba(17, 24, 39, 0.06);
+  border-radius: 14rpx;
+  padding: 0 16rpx;
+  font-size: 28rpx;
+}
+
+.smallBtn {
+  padding: 12rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+}
+
+.empty {
+  padding: 22rpx;
+}
+
+.emptyTitle {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.emptyDesc {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+}
+

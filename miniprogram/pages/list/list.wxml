@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="bar card">
+    <view class="barLeft">
+      <view class="barTitle">{{categoryName || "商品"}}</view>
+      <view class="barSub muted">{{countText}}</view>
+    </view>
+    <view class="barBtn" bindtap="goSearch">搜索</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="muted">加载中…</view>
+
+  <view wx:elif="{{items.length === 0}}" class="empty card">
+    <view class="emptyTitle">暂无商品</view>
+    <view class="emptyDesc muted">稍后再来看看，或联系商家上新。</view>
+  </view>
+
+  <view wx:else class="grid">
+    <view
+      wx:for="{{items}}"
+      wx:key="_id"
+      class="item card"
+      data-id="{{item._id}}"
+      bindtap="goDetail"
+    >
+      <image
+        class="cover"
+        mode="aspectFill"
+        src="{{item.coverDisplaySrc}}"
+        data-idx="{{index}}"
+        data-fileid="{{item.coverFileId}}"
+        binderror="onCoverError"
+      ></image>
+      <view class="meta">
+        <view class="line"><text class="k">名称：</text><text class="v">{{item.name}}</text></view>
+        <view class="line"><text class="k">价格：</text><text class="v">¥{{item.priceText}}</text></view>
+        <view class="line"><text class="k">行程：</text><text class="v">{{item.unit || "-"}}</text></view>
+        <view class="line"><text class="k">年份：</text><text class="v">{{item.yearText || "-"}}</text></view>
+      </view>
+    </view>
+  </view>
+</view>
