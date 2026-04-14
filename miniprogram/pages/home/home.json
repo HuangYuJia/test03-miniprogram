@@ -1,4 +1,5 @@
 {
-  "navigationBarTitleText": "产品相册"
+  "navigationBarTitleText": "产品相册",
+  "enableShareTimeline": true
 }
 

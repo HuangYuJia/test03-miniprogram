@@ -67,6 +67,22 @@ Page({
   goCategoryAdmin() {
     if (!this.data.isAdmin) return;
     this._navTo("/pages/admin/category/category");
+  },
+
+  /** 右上角「转发给朋友」依赖此回调，否则菜单常为灰 */
+  onShareAppMessage() {
+    return {
+      title: "产品相册报价 · 看图看价",
+      path: "/pages/home/home"
+    };
+  },
+
+  /** 分享到朋友圈（需 home.json 开启 enableShareTimeline；个人主体可能仍受限） */
+  onShareTimeline() {
+    return {
+      title: "产品相册报价 · 看图看价",
+      query: ""
+    };
   }
 });
 
