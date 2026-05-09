@@ -18,7 +18,7 @@
 
     <view class="field twoCol">
       <view class="col">
-        <view class="label muted">年份（必填）</view>
+        <view class="label muted">年份（可选）</view>
         <picker mode="date" fields="year" value="{{year || defaultYear}}" bindchange="onYearPick">
           <view class="picker cardInner">
             {{year || "请选择年份"}}

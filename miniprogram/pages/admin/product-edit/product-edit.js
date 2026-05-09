@@ -25,7 +25,7 @@ Page({
     name: "",
     price: "",
     unit: "",
-    /** 必填：年份（YYYY） */
+    /** 可选：年份（YYYY） */
     year: "",
     /** 选填：月份（01-12） */
     month: "",
@@ -284,8 +284,8 @@ Page({
     }
 
     const year = String(this.data.year || "").trim();
-    if (!/^\d{4}$/.test(year)) {
-      wx.showToast({ title: "年份必填（如 2026）", icon: "none" });
+    if (year && !/^\d{4}$/.test(year)) {
+      wx.showToast({ title: "年份格式不正确（如 2026）", icon: "none" });
       return;
     }
     const month = String(this.data.month || "").trim();
