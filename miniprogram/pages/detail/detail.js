@@ -46,9 +46,20 @@ Page({
       }
 
       const fileIds = allImageFileIdsForProduct(p);
+      let tonnageText = "";
+      try {
+        const catId = String(p.categoryId || "").trim();
+        if (catId) {
+          const catRes = await db.collection("categories").doc(catId).get();
+          tonnageText = String(catRes?.data?.name || "").trim();
+        }
+      } catch (e) {
+        tonnageText = "";
+      }
       const item = {
         ...p,
         priceText: centsToYuanText(p.price),
+        tonnageText,
         yearText: (() => {
           const y = String(p?.year || "").trim();
           if (/^\d{4}$/.test(y)) return y;

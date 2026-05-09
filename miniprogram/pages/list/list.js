@@ -18,6 +18,14 @@ function yearTextFromProduct(p) {
   return m ? m[1] : "";
 }
 
+function numberFromName(name) {
+  const s = String(name || "");
+  const m = s.match(/(\d+(?:\.\d+)?)/);
+  if (!m) return Number.POSITIVE_INFINITY;
+  const n = Number(m[1]);
+  return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+}
+
 async function fetchAll(query, { pageSize = 20, max = 1000 } = {}) {
   const all = [];
   let skip = 0;
@@ -73,7 +81,16 @@ Page({
         .orderBy("createdAt", "desc")
         .limit(200)
         .get();
-      this.setData({ categories: res.data || [] });
+      const categories = (res.data || []).slice().sort((a, b) => {
+        const na = numberFromName(a?.name);
+        const nb = numberFromName(b?.name);
+        if (na !== nb) return na - nb;
+        const sa = Number(a?.sort ?? 0);
+        const sb = Number(b?.sort ?? 0);
+        if (sa !== sb) return sa - sb;
+        return String(a?.name || "").localeCompare(String(b?.name || ""), "zh-Hans-CN");
+      });
+      this.setData({ categories });
     } catch (e) {
       this.setData({ categories: [] });
       wx.showToast({ title: "读取分类失败", icon: "none" });

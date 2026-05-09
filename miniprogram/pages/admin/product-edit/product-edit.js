@@ -177,6 +177,9 @@ Page({
     const year = v ? v.slice(0, 4) : "";
     this.setData({ year });
   },
+  clearYear() {
+    this.setData({ year: "" });
+  },
   onMonthPick(e) {
     const idx = Number(e?.detail?.value || 0);
     const opt = this.data.monthOptions[idx] || "";

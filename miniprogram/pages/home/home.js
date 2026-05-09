@@ -3,6 +3,14 @@ import { createNavigateOnce } from "../../utils/navGuard";
 
 const db = wx.cloud.database();
 
+function numberFromName(name) {
+  const s = String(name || "");
+  const m = s.match(/(\d+(?:\.\d+)?)/);
+  if (!m) return Number.POSITIVE_INFINITY;
+  const n = Number(m[1]);
+  return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+}
+
 Page({
   data: {
     loading: true,
@@ -37,7 +45,16 @@ Page({
         .orderBy("createdAt", "desc")
         .get();
 
-      this.setData({ categories: res.data || [] });
+      const categories = (res.data || []).slice().sort((a, b) => {
+        const na = numberFromName(a?.name);
+        const nb = numberFromName(b?.name);
+        if (na !== nb) return na - nb;
+        const sa = Number(a?.sort ?? 0);
+        const sb = Number(b?.sort ?? 0);
+        if (sa !== sb) return sa - sb;
+        return String(a?.name || "").localeCompare(String(b?.name || ""), "zh-Hans-CN");
+      });
+      this.setData({ categories });
     } catch (e) {
       wx.showToast({ title: "读取分类失败", icon: "none" });
     } finally {

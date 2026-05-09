@@ -24,6 +24,7 @@
             {{year || "请选择年份"}}
           </view>
         </picker>
+        <view wx:if="{{year}}" class="clearLink" bindtap="clearYear">清空</view>
       </view>
       <view class="col">
         <view class="label muted">月份（可选）</view>

@@ -68,6 +68,33 @@
   font-weight: 700;
 }
 
+.searchRow {
+  margin-top: 10rpx;
+  padding: 14rpx;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.searchInput {
+  flex: 1;
+  height: 72rpx;
+  background: rgba(17, 24, 39, 0.06);
+  border-radius: 16rpx;
+  padding: 0 18rpx;
+  font-size: 26rpx;
+}
+
+.searchClear {
+  padding: 0 16rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  border-radius: 16rpx;
+  background: rgba(17, 24, 39, 0.06);
+  color: #374151;
+  font-size: 26rpx;
+}
+
 .sectionHeader {
   display: flex;
   align-items: flex-end;

@@ -51,6 +51,14 @@
   font-size: 28rpx;
 }
 
+.clearLink {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: rgba(17, 24, 39, 0.62);
+  text-decoration: underline;
+  width: fit-content;
+}
+
 .media {
   margin-top: 16rpx;
   padding: 18rpx;

@@ -49,6 +49,16 @@
       </button>
     </view>
 
+    <view class="searchRow card">
+      <input
+        class="searchInput"
+        placeholder="按名称搜索（支持模糊匹配）"
+        value="{{nameQuery}}"
+        bindinput="onNameQuery"
+      />
+      <view wx:if="{{nameQuery}}" class="searchClear" bindtap="clearNameQuery">清空</view>
+    </view>
+
     <view wx:if="{{loading}}" class="muted">加载中…</view>
 
     <view wx:elif="{{items.length === 0 && productTotalCount === 0}}" class="card empty">

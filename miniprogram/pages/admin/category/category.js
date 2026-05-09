@@ -206,6 +206,8 @@ Page({
         this.setData({ dirtyCount: this.dirtyIds.size });
       }
       wx.showToast({ title: "全部已保存", icon: "success" });
+      // 保存后刷新一次列表，确保顺序/状态与云端一致
+      await this.load();
     } catch (e) {
       if (loadingOn) {
         wx.hideLoading();

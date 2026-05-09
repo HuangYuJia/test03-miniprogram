@@ -25,6 +25,7 @@
     <view class="info card">
       <view class="kv">
         <view class="kvLine"><text class="k">名称：</text><text class="v">{{item.name}}</text></view>
+        <view class="kvLine"><text class="k">吨位：</text><text class="v">{{item.tonnageText || "-"}}</text></view>
         <view class="kvLine"><text class="k">价格：</text><text class="v">¥{{item.priceText}}</text></view>
         <view class="kvLine"><text class="k">行程：</text><text class="v">{{item.unit || "-"}}</text></view>
         <view class="kvLine"><text class="k">年份：</text><text class="v">{{item.yearText || "-"}}</text></view>

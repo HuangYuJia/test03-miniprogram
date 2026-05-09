@@ -9,6 +9,20 @@ import {
 
 const db = wx.cloud.database();
 
+async function fetchAll(query, { pageSize = 20, max = 2000 } = {}) {
+  const all = [];
+  let skip = 0;
+  while (true) {
+    const res = await query.skip(skip).limit(pageSize).get();
+    const rows = res.data || [];
+    all.push(...rows);
+    if (rows.length < pageSize) break;
+    skip += pageSize;
+    if (skip >= max) break;
+  }
+  return all;
+}
+
 Page({
   /** 完整列表（筛选在内存中进行） */
   allProducts: [],
@@ -19,6 +33,8 @@ Page({
     loading: true,
     /** 列表筛选：all | on(仅上架) | off(仅下架) */
     listFilter: "all",
+    /** 名称搜索关键字（仅本地筛选） */
+    nameQuery: "",
     items: [],
     /** 云库中商品总数，用于区分「真无数据」与「筛选为空」 */
     productTotalCount: 0,
@@ -49,16 +65,16 @@ Page({
   async loadProducts() {
     this.setData({ loading: true });
     try {
-      let res;
+      let products = [];
       try {
-        res = await db
+        const q = db
           .collection("products")
           .orderBy("sort", "asc")
-          .orderBy("updatedAt", "desc")
-          .limit(50)
-          .get();
+          .orderBy("updatedAt", "desc");
+        products = await fetchAll(q, { pageSize: 20, max: 2000 });
       } catch (e1) {
-        res = await db.collection("products").orderBy("sort", "asc").limit(50).get();
+        const q2 = db.collection("products").orderBy("sort", "asc");
+        products = await fetchAll(q2, { pageSize: 20, max: 2000 });
       }
 
       let catList = [];
@@ -78,7 +94,7 @@ Page({
         catList.map((c) => [c._id, String(c.name || "").trim() || "未命名分类"])
       );
 
-      const items = (res.data || []).map((p) => ({
+      const items = (products || []).map((p) => ({
         ...p,
         coverUrl: p.coverUrl || "",
         coverFileId: resolveCoverFileId(p),
@@ -108,17 +124,29 @@ Page({
 
   applyListFilter() {
     const f = this.data.listFilter;
+    const q = String(this.data.nameQuery || "").trim().toLowerCase();
     const all = this.allProducts || [];
-    let rows;
-    if (f === "on") rows = all.filter((p) => p.enabled === true);
-    else if (f === "off") rows = all.filter((p) => p.enabled !== true);
-    else {
+    let base;
+    if (f === "all") {
       // 全部：已上架在前，已下架在后（同状态内保持云端返回的 sort / 时间顺序）
-      rows = [...all].sort((a, b) => {
+      base = [...all].sort((a, b) => {
         const ra = a.enabled === true ? 0 : 1;
         const rb = b.enabled === true ? 0 : 1;
         return ra - rb;
       });
+    } else if (f === "on") {
+      base = all.filter((p) => p.enabled === true);
+    } else {
+      base = all.filter((p) => p.enabled !== true);
+    }
+
+    let rows = base;
+    if (q) {
+      rows = base.filter((p) =>
+        String(p?.name || "")
+          .toLowerCase()
+          .includes(q)
+      );
     }
 
     const total = all.length;
@@ -128,14 +156,30 @@ Page({
     let countText = "";
     if (!total) countText = "暂无商品";
     else if (f === "all") {
-      countText = `共 ${total} 个（上架 ${onCount} · 下架 ${offCount}）`;
+      countText = q
+        ? `共 ${total} 个（上架 ${onCount} · 下架 ${offCount}） · 命中 ${rows.length} 个`
+        : `共 ${total} 个（上架 ${onCount} · 下架 ${offCount}）`;
     } else if (f === "on") {
       countText = rows.length ? `已上架 ${rows.length} 个` : "当前无已上架商品";
     } else {
       countText = rows.length ? `已下架 ${rows.length} 个` : "当前无已下架商品";
     }
+    if (q && f !== "all") {
+      countText = `${countText} · 命中 ${rows.length} 个`;
+    }
 
     this.setData({ items: rows, countText });
+  },
+
+  onNameQuery(e) {
+    const v = e?.detail?.value ?? "";
+    this.setData({ nameQuery: v });
+    this.applyListFilter();
+  },
+
+  clearNameQuery() {
+    this.setData({ nameQuery: "" });
+    this.applyListFilter();
   },
 
   onListFilter(e) {
