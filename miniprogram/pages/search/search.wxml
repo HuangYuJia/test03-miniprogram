@@ -11,6 +11,8 @@
     <view class="searchBtn" bindtap="onSearch">搜索</view>
   </view>
 
+  <view class="countRow muted" wx:if="{{searched && !loading}}">{{countText}}</view>
+
   <view wx:if="{{loading}}" class="muted">搜索中…</view>
 
   <view wx:elif="{{searched && items.length === 0}}" class="empty card">

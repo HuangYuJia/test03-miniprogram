@@ -18,6 +18,20 @@ function yearTextFromProduct(p) {
   return m ? m[1] : "";
 }
 
+async function fetchAll(query, { pageSize = 20, max = 1000 } = {}) {
+  const all = [];
+  let skip = 0;
+  while (true) {
+    const res = await query.skip(skip).limit(pageSize).get();
+    const rows = res.data || [];
+    all.push(...rows);
+    if (rows.length < pageSize) break;
+    skip += pageSize;
+    if (skip >= max) break;
+  }
+  return all;
+}
+
 Page({
   _itemsCache: new Map(),
 
@@ -114,14 +128,14 @@ Page({
     this.setData({ loading: true });
     try {
       const where = { enabled: true, categoryId };
-      const res = await db
+      const query = db
         .collection("products")
         .where(where)
         .orderBy("sort", "asc")
-        .orderBy("updatedAt", "desc")
-        .get();
+        .orderBy("updatedAt", "desc");
+      const data = await fetchAll(query, { pageSize: 20, max: 1000 });
 
-      const items = (res.data || []).map((p) => ({
+      const items = (data || []).map((p) => ({
         ...p,
         coverUrl: p.coverUrl || "",
         coverFileId: resolveCoverFileId(p),

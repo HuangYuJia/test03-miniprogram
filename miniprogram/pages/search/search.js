@@ -17,12 +17,27 @@ function yearTextFromProduct(p) {
   return m ? m[1] : "";
 }
 
+async function fetchAll(query, { pageSize = 20, max = 1000 } = {}) {
+  const all = [];
+  let skip = 0;
+  while (true) {
+    const res = await query.skip(skip).limit(pageSize).get();
+    const rows = res.data || [];
+    all.push(...rows);
+    if (rows.length < pageSize) break;
+    skip += pageSize;
+    if (skip >= max) break;
+  }
+  return all;
+}
+
 Page({
   data: {
     q: "",
     loading: false,
     searched: false,
-    items: []
+    items: [],
+    countText: ""
   },
 
   onLoad() {
@@ -37,7 +52,7 @@ Page({
     if (this._searchBusy) return;
     this._searchBusy = true;
     const q = (this.data.q || "").trim();
-    this.setData({ loading: true, searched: true });
+    this.setData({ loading: true, searched: true, countText: "" });
     try {
       let query = db.collection("products").where({ enabled: true });
       if (q) {
@@ -48,13 +63,10 @@ Page({
         query = query.where({ name: regex });
       }
 
-      const res = await query
-        .orderBy("sort", "asc")
-        .orderBy("updatedAt", "desc")
-        .limit(50)
-        .get();
+      query = query.orderBy("sort", "asc").orderBy("updatedAt", "desc");
+      const data = await fetchAll(query, { pageSize: 20, max: 1000 });
 
-      const items = (res.data || []).map((p) => ({
+      const items = (data || []).map((p) => ({
         ...p,
         coverUrl: p.coverUrl || "",
         coverFileId: resolveCoverFileId(p),
@@ -64,10 +76,13 @@ Page({
 
       await hydrateCoverUrls(items);
 
-      this.setData({ items });
+      this.setData({
+        items,
+        countText: items.length ? `共 ${items.length} 个` : "暂无结果"
+      });
     } catch (e) {
       wx.showToast({ title: "搜索失败", icon: "none" });
-      this.setData({ items: [] });
+      this.setData({ items: [], countText: "" });
     } finally {
       this.setData({ loading: false });
       this._searchBusy = false;

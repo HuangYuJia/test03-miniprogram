@@ -23,6 +23,12 @@
   font-size: 28rpx;
 }
 
+.countRow {
+  margin-top: 10rpx;
+  padding: 0 2rpx;
+  font-size: 24rpx;
+}
+
 .grid {
   margin-top: 16rpx;
   display: grid;
