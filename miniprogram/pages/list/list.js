@@ -61,6 +61,14 @@ Page({
     this.bootstrap();
   },
 
+  onShow() {
+    // 从编辑页返回时，清缓存以加载最新数据
+    this._itemsCache = new Map();
+    if (this.data.categoryId) {
+      this.loadProductsForCategory(this.data.categoryId, { force: true });
+    }
+  },
+
   async onPullDownRefresh() {
     this._itemsCache = new Map();
     await this.bootstrap({ force: true });
